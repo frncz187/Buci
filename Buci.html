@@ -1,0 +1,60 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <title>Buci számoló</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family: Arial, sans-serif; max-width:420px; margin:18px auto; padding:0 12px; color:#222;}
+    h1{font-size:1.3rem; text-align:center;}
+    label{display:block; margin-top:10px; font-weight:600;}
+    input{width:100%; padding:8px; margin-top:4px; font-size:1rem; box-sizing:border-box;}
+    button{margin-top:14px; width:100%; padding:10px; font-size:1.05rem; cursor:pointer;}
+    .result{margin-top:18px; background:#f7f7f7; padding:14px; border-radius:8px; text-align:center; font-size:1.2rem;}
+  </style>
+</head>
+<body>
+  <h1>Buci számoló</h1>
+
+  <label>Tegnapról maradt</label>
+  <input id="yesterday" type="number" value="0">
+
+  <label>Ma érkezett</label>
+  <input id="arrived" type="number" value="0">
+
+  <label>Gép szerinti teljes fogyás</label>
+  <input id="machine_sold" type="number" value="0">
+
+  <label>Személyzeti</label>
+  <input id="staff" type="number" value="0">
+
+  <label>GM</label>
+  <input id="gm" type="number" value="0">
+
+  <label>Selejt</label>
+  <input id="waste" type="number" value="0">
+
+  <button onclick="calc()">Számol</button>
+
+  <div class="result">
+    <strong>Buci eredmény:</strong> <span id="remaining_physical">0</span>
+  </div>
+
+<script>
+function calc(){
+  const y = parseInt(document.getElementById('yesterday').value) || 0;
+  const a = parseInt(document.getElementById('arrived').value) || 0;
+  const m = parseInt(document.getElementById('machine_sold').value) || 0;
+  const s = parseInt(document.getElementById('staff').value) || 0;
+  const g = parseInt(document.getElementById('gm').value) || 0;
+  const w = parseInt(document.getElementById('waste').value) || 0;
+
+  const starting = y + a;
+  const real_sold = Math.max(0, m - s - w + g);
+  const physical_remaining = starting - real_sold;
+
+  document.getElementById('remaining_physical').textContent = physical_remaining;
+}
+</script>
+</body>
+</html>
